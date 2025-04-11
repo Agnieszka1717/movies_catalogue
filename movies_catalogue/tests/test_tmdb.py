@@ -1,9 +1,8 @@
 
 import requests
-from movies_catalogue import tmdb_client
 from unittest.mock import Mock
 
-
+import tmdb_client
 
 def test_get_poster_url_uses_default_size():
    # Przygotowanie danych
@@ -36,7 +35,7 @@ def test_get_movies_list(monkeypatch):
    response = requests_mock.return_value
    # Przysłaniamy wynik wywołania metody .json()
    response.json.return_value = mock_movies_list
-   monkeypatch.setattr("movies_catalogue.tmdb_client.requests.get", requests_mock)
+   monkeypatch.setattr("tmdb_client.requests.get", requests_mock)
 
    movies_list = tmdb_client.get_movies_list(list_name="popular")
    assert movies_list == mock_movies_list
@@ -46,7 +45,7 @@ def test_get_single_movie(monkeypatch):
    requests_mock = Mock()
    response = requests_mock.return_value
    response.json.return_value = mock_single_movie
-   monkeypatch.setattr("movies_catalogue.tmdb_client.requests.get", requests_mock)
+   monkeypatch.setattr("tmdb_client.requests.get", requests_mock)
    single_movie = tmdb_client.get_single_movie(movie_id=1)
    assert single_movie == mock_single_movie
 
@@ -56,6 +55,7 @@ def test_get_single_movie_cast(monkeypatch):
    requests_mock = Mock()
    response = requests_mock.return_value
    response.json.return_value = mock_single_movie_cast
-   monkeypatch.setattr("movies_catalogue.tmdb_client.requests.get", requests_mock)
+   monkeypatch.setattr("tmdb_client.requests.get", requests_mock)
    single_movie_cast = tmdb_client.get_single_movie_cast(movie_id=1)
    assert single_movie_cast == mock_single_movie_cast["cast"]
+
