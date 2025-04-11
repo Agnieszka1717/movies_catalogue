@@ -8,7 +8,7 @@ def homepage():
     selected_list = request.args.get('list_name', 'upcoming')
     movie_lists = ["now_playing", "popular", "top_rated", "upcoming"]
     if selected_list not in movie_lists :
-        selected_list = "popular"
+        selected_list = "upcoming"
     movies = tmdb_client.get_movies(how_many=8, list_name=selected_list)
 
     return render_template("homepage.html", movies=movies, current_list=selected_list, movie_lists=movie_lists)
